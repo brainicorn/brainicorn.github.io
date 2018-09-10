@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>GO Buffering Lexer  &middot; Brainicorn</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="A library for easily building lexers in Go by utilizing an internal capture buffer so consumers can emit the tokens they care about and forget about the tokens they don&#39;t." />
+
+<meta name="keywords" content="go, golang, library, parser, lexer, ">
+
+
+<meta property="og:title" content="GO Buffering Lexer  &middot; Brainicorn ">
+<meta property="og:site_name" content="Brainicorn"/>
+<meta property="og:url" content="https://brainicorn.github.io/1/01/01/go-buffering-lexer/" />
+<meta property="og:locale" content="">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="A library for easily building lexers in Go by utilizing an internal capture buffer so consumers can emit the tokens they care about and forget about the tokens they don&#39;t."/>
+<meta property="og:article:published_time" content="0001-01-01T00:00:00Z" />
+<meta property="og:article:modified_time" content="0001-01-01T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="go">
+    
+<meta property="og:article:tag" content="golang">
+    
+<meta property="og:article:tag" content="library">
+    
+<meta property="og:article:tag" content="parser">
+    
+<meta property="og:article:tag" content="lexer">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@brainicorndev" />
+<meta name="twitter:creator" content="@brainicorndev" />
+<meta name="twitter:title" content="GO Buffering Lexer" />
+<meta name="twitter:description" content="A library for easily building lexers in Go by utilizing an internal capture buffer so consumers can emit the tokens they care about and forget about the tokens they don&#39;t." />
+<meta name="twitter:url" content="https://brainicorn.github.io/1/01/01/go-buffering-lexer/" />
+<meta name="twitter:domain" content="https://brainicorn.github.io/">
+  
+
+  
+
+
+
+<link rel="canonical" href="https://brainicorn.github.io/1/01/01/go-buffering-lexer/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://brainicorn.github.io/touch-icon-144-precomposed.png">
+<link rel="icon" href="https://brainicorn.github.io/favicon.png">
+<meta name="generator" content="Hugo 0.48" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+    
+
+
+
+  <link rel="stylesheet" href="https://brainicorn.github.io/css/github-ribbon.css">
+
+
+
+<link rel="stylesheet" href="https://brainicorn.github.io/css/bundle.min.becd6e9b1c7d9c6bde34057bad4ede5ab22712f9db60a579e153bce287631609066ca1291320505149c79792a94a145fa3f139fc3a09d28dabaf8b3b8bbc83af.css" integrity="sha512-vs1umxx9nGveNAV7rU7eWrInEvnbYKV54VO84odjFgkGbKEpEyBQUUnHl5KpShRfo/E5/DoJ0o2rr4s7i7yDrw==">
+
+</head>
+<body data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+          
+          <a class="navbar-brand-img" href="https://brainicorn.github.io/">
+            <img alt="Brainicorn" src="https://brainicorn.github.io/images/brainicorn-logo-oneline-wht-60h.png">
+            
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+              
+                <a href="https://brainicorn.github.io/" >
+                  
+                  Home
+                </a>
+              
+            </li>
+            
+            <li class="active">
+              
+                <a href="https://brainicorn.github.io/post/" >
+                  
+                  Blog
+                </a>
+              
+            </li>
+            
+            
+              
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+
+      
+<a href="https://github.com/brainicorn/goblex" class="github-ribbon">Fork me on GitHub</a>
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="title-metas text-center">
+
+    <h1>GO Buffering Lexer
+</h1>
+
+    <div class="metas">
+<small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="0001-01-01">1 Jan, 0001</time>
+</small>
+
+
+  <small>
+    &middot; by Brainicorn
+  
+  &middot; Read in about 1 min
+  &middot; (188 words)
+  &middot; 
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=GO%20Buffering%20Lexer&amp;url=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f&amp;title=GO%20Buffering%20Lexer" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=GO%20Buffering%20Lexer&amp;body=Check out this site https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  </small>
+
+<div class="margin-10">
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://brainicorn.github.io/tags/go" class="label label-primary">go</a>
+  
+  <a href="https://brainicorn.github.io/tags/lexer" class="label label-primary">lexer</a>
+  
+
+
+</div>
+
+<br>
+</div>
+
+  </div>
+</div>
+
+
+      <div class="content">
+  
+
+<h2 id="goblex-go-buffering-lexer">Goblex (Go Buffering Lexer)</h2>
+
+<p><a href="https://github.com/brainicorn/goblex">Goblex</a> is a library for easily building lexers in Go by utilizing an internal capture buffer so consumers can emit the tokens they care about and forget about the tokens they don&rsquo;t.</p>
+
+<p>This library was built out of necessity. It all began when we decided to write a build-time library that could generate json-schema from go structs&hellip;</p>
+
+<p>To accomplish this, we quickly realized we needed to build some sort of &laquo;java-like&raquo; annotation system (see <a href="https://brainicorn.github.io/post/ganno">our other post about that</a>) which in-turn required us to use a lexer for finding complex annotations inside of go comments.</p>
+
+<p>After trying a gazillion different go lexer libraries, we found we&rsquo;d always hit some use-case that the library couldn&rsquo;t handle and so we decided to write our own.</p>
+
+<h3 id="yet-another-go-lexer">Yet Another Go Lexer</h3>
+
+<p>There are a lot of Go libraries available for building lexers and like this one a lot of them borrow
+ideas from <a href="https://www.youtube.com/watch?v=HxaD_trXwRE">Rob Pike&rsquo;s talk on building lexers.</a></p>
+
+<p>The difference with this library is that it uses an internal capture buffer to capture/emit tokens
+instead of relying on marked positions on the input and/or using regular expressions.</p>
+
+</div>
+
+
+      <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=GO%20Buffering%20Lexer&amp;url=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f&amp;title=GO%20Buffering%20Lexer" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=GO%20Buffering%20Lexer&amp;body=Check out this site https%3a%2f%2fbrainicorn.github.io%2f1%2f01%2f01%2fgo-buffering-lexer%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//brainicorn.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+    </div>
+    
+  </div>
+</div>
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+
+<a id="contact-link-email" class="contact_link" href="mailto:dev@brainicorn.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/brainicorn">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/brainicorndev">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  Mythical Ideas.
+
+</small>
+</div>
+
+
+    
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<script>
+var ENABLE_POPOVER =  null , 
+EXPIRE_COOKIE =  null , 
+SHOW_MODAL_TIMEOUT =  null , 
+MOUSE_LEAVE =  null , 
+MODAL_SIZE =  null , 
+POST_URL =  null , 
+SIGNUP_HEADER =  null ,
+HEADER_IMAGE =  null ,
+IMG_DESCRIPTION =  null ,
+SIGNUP_TEXT =  null ,
+INPUT_PLACEHOLDER =  null ,
+SUBMIT_BUTTON =  null ,
+SUCCESS_MESSAGE =  null ,
+ERROR_MESSAGE =  null ,
+OPTIN =  null ,
+COOKIE_NAME =  null ,
+CONTENTLANGUAGE =  null ; 
+</script>
+
+
+
+
+
+
+
+<script  src="https://brainicorn.github.io/js/bundle.min.a0761bf8598edda2bb2c0e348a3160c418f2bc30908f40740ee7f30dabbdeed27d82ee58e16400badd1ae84ce7be7ce10702c9be216abe5de1cb497de995e850.js" integrity="sha512-oHYb&#43;FmO3aK7LA40ijFgxBjyvDCQj0B0DufzDau97tJ9gu5Y4WQAut0a6EznvnzhBwLJviFqvl3hy0l96ZXoUA=="></script>
+
+
+
+
+
+
+
+  </body>
+</html>
+
