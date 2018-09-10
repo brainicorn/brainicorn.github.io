@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Topics on Brainicorn</title>
-    <link>https://brainicorn.github.io/topics/</link>
+    <link>https://brainicorn.com/topics/</link>
     <description>Recent content in Topics on Brainicorn</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>dev@brainicorn.com (Brainicorn)</managingEditor>
     <webMaster>dev@brainicorn.com (Brainicorn)</webMaster>
     <lastBuildDate>Tue, 13 Feb 2018 13:11:15 -0600</lastBuildDate>
     
-	<atom:link href="https://brainicorn.github.io/topics/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://brainicorn.com/topics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Golang</title>
-      <link>https://brainicorn.github.io/topics/golang/</link>
+      <link>https://brainicorn.com/topics/golang/</link>
       <pubDate>Tue, 13 Feb 2018 13:11:15 -0600</pubDate>
       <author>dev@brainicorn.com (Brainicorn)</author>
-      <guid>https://brainicorn.github.io/topics/golang/</guid>
+      <guid>https://brainicorn.com/topics/golang/</guid>
       <description></description>
     </item>
     

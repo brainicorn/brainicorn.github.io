@@ -3,50 +3,50 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://brainicorn.github.io/2018/02/13/go-buffering-lexer/</loc>
+    <loc>https://brainicorn.com/2018/02/13/go-buffering-lexer/</loc>
     <lastmod>2018-09-10T13:26:15-05:00</lastmod>
   </url>
   
   <url>
-    <loc>https://brainicorn.github.io/</loc>
+    <loc>https://brainicorn.com/</loc>
     <lastmod>2018-09-10T13:26:15-05:00</lastmod>
   </url>
   
   <url>
-    <loc>https://brainicorn.github.io/post/</loc>
+    <loc>https://brainicorn.com/post/</loc>
     <lastmod>2018-09-10T13:26:15-05:00</lastmod>
   </url>
   
   <url>
-    <loc>https://brainicorn.github.io/project/</loc>
+    <loc>https://brainicorn.com/project/</loc>
     <lastmod>2018-09-10T13:26:15-05:00</lastmod>
   </url>
   
   <url>
-    <loc>https://brainicorn.github.io/tags/</loc>
+    <loc>https://brainicorn.com/tags/</loc>
     <lastmod>2018-09-10T13:26:15-05:00</lastmod>
   </url>
   
   <url>
-    <loc>https://brainicorn.github.io/tags/go/</loc>
-    <lastmod>2018-09-10T13:26:15-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://brainicorn.github.io/topics/golang/</loc>
+    <loc>https://brainicorn.com/tags/go/</loc>
     <lastmod>2018-09-10T13:26:15-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://brainicorn.github.io/tags/lexer/</loc>
+    <loc>https://brainicorn.com/topics/golang/</loc>
     <lastmod>2018-09-10T13:26:15-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://brainicorn.github.io/topics/</loc>
+    <loc>https://brainicorn.com/tags/lexer/</loc>
+    <lastmod>2018-09-10T13:26:15-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://brainicorn.com/topics/</loc>
     <lastmod>2018-09-10T13:26:15-05:00</lastmod>
     <priority>0</priority>
   </url>

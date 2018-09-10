@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Brainicorn</title>
-    <link>https://brainicorn.github.io/project/</link>
+    <link>https://brainicorn.com/project/</link>
     <description>Recent content on Brainicorn</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>dev@brainicorn.com (Brainicorn)</managingEditor>
     <webMaster>dev@brainicorn.com (Brainicorn)</webMaster>
     <lastBuildDate>Mon, 10 Sep 2018 13:26:15 -0500</lastBuildDate>
     
-	<atom:link href="https://brainicorn.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://brainicorn.com/project/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

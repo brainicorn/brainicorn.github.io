@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Go on Brainicorn</title>
-    <link>https://brainicorn.github.io/tags/go/</link>
+    <link>https://brainicorn.com/tags/go/</link>
     <description>Recent content in Go on Brainicorn</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>dev@brainicorn.com (Brainicorn)</managingEditor>
     <webMaster>dev@brainicorn.com (Brainicorn)</webMaster>
     <lastBuildDate>Tue, 13 Feb 2018 13:11:15 -0600</lastBuildDate>
     
-	<atom:link href="https://brainicorn.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://brainicorn.com/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>GO Buffering Lexer</title>
-      <link>https://brainicorn.github.io/2018/02/13/go-buffering-lexer/</link>
+      <link>https://brainicorn.com/2018/02/13/go-buffering-lexer/</link>
       <pubDate>Tue, 13 Feb 2018 13:11:15 -0600</pubDate>
       <author>dev@brainicorn.com (Brainicorn)</author>
-      <guid>https://brainicorn.github.io/2018/02/13/go-buffering-lexer/</guid>
+      <guid>https://brainicorn.com/2018/02/13/go-buffering-lexer/</guid>
       <description>Goblex (Go Buffering Lexer) Goblex is a library for easily building lexers in Go by utilizing an internal capture buffer so consumers can emit the tokens they care about and forget about the tokens they don&amp;rsquo;t.
 This library was built out of necessity. It all began when we decided to write a build-time library that could generate json-schema from go structs&amp;hellip;
 To accomplish this, we quickly realized we needed to build some sort of &amp;laquo;java-like&amp;raquo; annotation system (see our other post about that) which in-turn required us to use a lexer for finding complex annotations inside of go comments.</description>
